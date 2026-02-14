@@ -15,7 +15,7 @@ const handleLogin =(e: React.FormEvent)=>{
 }
 
 return (
-      <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-blue-100 to-indigo-200 p-4">
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-100 to-indigo-200 p-4">
       <div className="w-full max-w-md bg-white/80 backdrop-blur-md rounded-2xl shadow-xl overflow-hidden">
         
         {/* Üst Kısım (Header) */}
