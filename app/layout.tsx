@@ -15,7 +15,8 @@ export default function RootLayout({
 }>) {
   const pathname = usePathname();
   // Eğer adres "/login" ise bu değişken true olur
-  const isLoginPage = pathname === "/";
+  // Hem ana girişte (/) hem de kayıt sayfasında (/register) menüyü gizle
+  const isLoginPage = pathname === "/" || pathname === "/register";
 
   return (
     <html lang="tr">
