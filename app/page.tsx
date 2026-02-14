@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import React, { useState} from "react";
 import { useRouter } from "next/navigation";
 
@@ -8,11 +9,37 @@ export default function LoginPage(){
     const router = useRouter();
 
 
-const handleLogin =(e: React.FormEvent)=>{
+const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Giriş yapılıyor")
-    router.push("/dashboard");
-}
+    
+    // Basit doğrulama
+    if (!email || !password) {
+      alert("Lütfen tüm alanları doldurun!");
+      return;
+    }
+
+    try {
+      // API'ye istek atıyoruz
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        // Başarılıysa içeri al
+        router.push("/dashboard");
+      } else {
+        // Hatalıysa uyarı ver
+        alert(data.message || "Giriş başarısız!");
+      }
+    } catch (error) {
+      console.error("Giriş hatası:", error);
+      alert("Bir hata oluştu, lütfen tekrar deneyin.");
+    }
+  };
 
 return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-100 to-indigo-200 p-4">
@@ -63,6 +90,12 @@ return (
             </button>
 
           </form>
+            <div className="text-center text-sm text-gray-500 mt-4">
+              Hesabın yok mu?{" "}
+            <Link href="/register" className="text-blue-600 font-bold hover:underline">
+               Kayıt Ol
+            </Link>
+            </div>
 
           <div className="mt-6 text-center text-xs text-gray-400">
             © 2026 Okul Otomasyon Sistemi
